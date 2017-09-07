@@ -1,0 +1,16 @@
+language: bash
+services: docker
+env:
+  matrix:
+  - VERSION=3.2
+  - secure: ZCfq0eOzvrOtJYnqwC7c2zz1eHdAjGyCFFVJOoUrRLC7vPai1OceHZDSxr9OUmb32d3i1bWs4lWD5TzfrMcR/XcrBkHbQrtoyCAegmiuwF1NgrPXb+pwMel2zdk9cofdNtKw/DR8ynGDPChj4pxHdDxbqSrTk5qbG4yuqtO2U1p/KSLtKSj8St+5otkqFrYf6iy/BoMn8/q+aGxm9rU/tMI6GndluRT+Rz+N4QZqd3Dp4kQrcCqUwHhtLgiaQ1Q9WTsOSFOrBdEFeHczHnRNU3XTxrd4CbLdxB6/yP8XbKFsQ2zMB8EMsiFA5t7KKAKq21FfjFAFAX7cxdoYGUQ46mwxsNDYWQNUsPAMgmOGkQs8dQmVE1+5j0DyQe2zqKHBah2Lr5Fh/W8uDh3TGa2eNxhBHK4uL1niQS8xghGJmnfS48HAqS+P5H6CI1D38b3nLLcs39lNeZ3R3KjBTzMGqr5aFFgKSXcuBVwWuxVkIqHai7MOUSzwWrwsqnGAxPPCbwk3IpPUAhI2mWwj2e+DwR8suJje6508tjutJoC9S1/Rah8Gz1ETpG2NK/KSSuKfLiRLehdUL/FeoObZBhYb0V/+mC3SSoGuVhgH6a9q9jTDZszd1rFk+cDF9MflLtDmakWGaH5kQ+lQWX2swGrC/0EESqUhHmZBJZ5ek8GciDI=
+before_script:
+- env | sort
+- cd "$VERSION"
+- image="mongodb-tools:$VERSION"
+script:
+- travis_retry docker build -t "$image" .
+after_script:
+- docker images
+after_success:
+- 'curl -H "Content-Type: application/json" --data "{\"source_type\": \"Branch\", \"source_name\": \""$TRAVIS_BRANCH"\"}\" -X POST https://registry.hub.docker.com/u/chriswessells/mongodb-tools/trigger/fc5c34b2-cbbb-4d73-8746-2d4eca952c78/'
