@@ -1,4 +1,5 @@
 # mongodb-tools
+https://travis-ci.org/chriswessells/mongodb-tools.svg?branch=master
 
 A tool container with ruby, mongodb-tools, and awscli installed for multiple versions of MongoDB.
 
