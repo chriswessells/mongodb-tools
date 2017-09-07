@@ -25,7 +25,7 @@ RUN set -x \
 	&& gosu nobody true \
 	&& apt-get purge -y --auto-remove wget
 
-#RUN mkdir /docker-entrypoint-initdb.d
+RUN mkdir /docker-entrypoint-initdb.d
 
 ENV GPG_KEYS \
 # pub   4096R/AAB2461C 2014-02-25 [expires: 2016-02-25]
