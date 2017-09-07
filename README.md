@@ -11,3 +11,7 @@ A tool container with ruby, mongodb-tools, and awscli installed for multiple ver
 Application versions
 
 ### 3.2 MongoDB, Ruby 2.4.1, and Debian 9
+
+The container uses MongoDB 3.2.14, ruby 2.4.1, redis 3.3.3.
+
+My use case is to separate the database update process in the deploy so it can run independent and automated.

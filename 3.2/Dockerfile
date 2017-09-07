@@ -29,10 +29,6 @@ RUN set -ex; \
 	gpg --export $GPG_KEYS > /etc/apt/trusted.gpg.d/mongodb.gpg; \
 	apt-key list
 
-# Allow build-time overrides (eg. to build image with MongoDB Enterprise version)
-# Options for MONGO_PACKAGE: mongodb-org OR mongodb-enterprise
-# Options for MONGO_REPO: repo.mongodb.org OR repo.mongodb.com
-# Example: docker build --build-arg MONGO_PACKAGE=mongodb-enterprise --build-arg MONGO_REPO=repo.mongodb.com .
 ARG MONGO_PACKAGE=mongodb-org
 ARG MONGO_REPO=repo.mongodb.org
 ENV MONGO_PACKAGE=${MONGO_PACKAGE} MONGO_REPO=${MONGO_REPO}
@@ -48,3 +44,15 @@ RUN set -x \
 		${MONGO_PACKAGE}-shell=$MONGO_VERSION \
 		${MONGO_PACKAGE}-tools=$MONGO_VERSION \
 	&& rm -rf /var/lib/apt/lists/* \
+
+RUN echo "deb http://ftp.utexas.edu/dotdeb/ stable all" >>  /etc/apt/sources.list.d/dotdeb.list
+
+RUN echo "deb-src http://ftp.utexas.edu/dotdeb/ stable all" >>  /etc/apt/sources.list.d/dotdeb.list
+
+RUN wget https://www.dotdeb.org/dotdeb.gpg && apt-key add dotdeb.gpg
+
+RUN set -x \
+  && apt update \
+  && apt install -y \
+  redis-server \
+  && rm -rf /var/lib/apt/lists/* \
