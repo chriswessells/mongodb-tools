@@ -43,7 +43,7 @@ RUN set -ex; \
 		gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
 	done; \
 	gpg --export $GPG_KEYS > /etc/apt/trusted.gpg.d/mongodb.gpg; \
-	rm -r "$GNUPGHOME"; \
+#	rm -r "$GNUPGHOME"; \
 	apt-key list
 
 # Allow build-time overrides (eg. to build image with MongoDB Enterprise version)
