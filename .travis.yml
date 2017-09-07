@@ -15,12 +15,5 @@ script:
 after_script:
   - docker images
 
-notifications:
-  webhooks:
-    urls:
-      - https://registry.hub.docker.com/u/chriswessells/mongodb-tools/trigger/fc5c34b2-cbbb-4d73-8746-2d4eca952c78/
-    on_success: always # default: always
-    on_failure: never # default: always
-    on_start: never  # default: never
-    on_cancel: never # default: always
-    on_error: never # default: always
+after_success:
+  - curl -H "Content-Type: application/json" --data '{"source_type": "Branch", "source_name": "$TRAVIS_BRANCH"}' -X POST https://registry.hub.docker.com/u/chriswessells/mongodb-tools/trigger/fc5c34b2-cbbb-4d73-8746-2d4eca952c78/
