@@ -3,19 +3,26 @@ services: docker
 
 env:
   - VERSION=3.2
-  - BRANCH=$TRAVIS_BRANCH
 
-#before_script:
-#  - env | sort
-#  - cd "$VERSION"
-#  - image="mongodb-tools:$VERSION"
-#
-#script:
-#  - travis_retry docker build -t "$image" .
-#
-#after_script:
-#  - docker images
+before_script:
+  - env | sort
+  - cd "$VERSION"
+  - image="mongodb-tools:$VERSION"
 
-after_success:
-  - echo "$BRANCH"
-#  - curl -H "Content-Type: application/json" --data '{"source_type": "Branch", "source_name": $TRAVIS_BRANCH}' -X POST https://registry.hub.docker.com/u/chriswessells/mongodb-tools/trigger/fc5c34b2-cbbb-4d73-8746-2d4eca952c78/
+script:
+  - travis_retry docker build -t "$image" .
+
+after_script:
+  - docker images
+
+notifications:
+  webhooks:
+    template:
+      - "{\"source_type\": \"Branch\", \"source_name\": \"%{branch}\"}"
+    urls:
+      - https://registry.hub.docker.com/u/chriswessells/mongodb-tools/trigger/fc5c34b2-cbbb-4d73-8746-2d4eca952c78/
+    on_success: always # default: always
+    on_failure: never # default: always
+    on_start: never  # default: never
+    on_cancel: never # default: always
+    on_error: never # default: always
