@@ -1,0 +1,16 @@
+language: bash
+services: docker
+
+env:
+  - VERSION=3.2
+
+before_script:
+  - env | sort
+  - cd "$VERSION"
+  - image="mongodb-tools:$VERSION"
+
+script:
+  - travis_retry docker build -t "$image" .
+
+after_script:
+  - docker images
