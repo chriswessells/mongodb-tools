@@ -15,11 +15,7 @@ ENV GPG_KEYS \
 # pub   4096R/AAB2461C 2014-02-25 [expires: 2016-02-25]
 #       Key fingerprint = DFFA 3DCF 326E 302C 4787  673A 01C4 E7FA AAB2 461C
 # uid                  MongoDB 2.6 Release Signing Key <packaging@mongodb.com>
-	DFFA3DCF326E302C4787673A01C4E7FAAAB2461C \
-# pub   4096R/EA312927 2015-10-09 [expires: 2017-10-08]
-#       Key fingerprint = 42F3 E95A 2C4F 0827 9C49  60AD D68F A50F EA31 2927
-# uid                  MongoDB 3.2 Release Signing Key <packaging@mongodb.com>
-	42F3E95A2C4F08279C4960ADD68FA50FEA312927
+	0C49F3730359A14518585931BC711F9BA15703C6 
 # https://docs.mongodb.com/manual/tutorial/verify-mongodb-packages/#download-then-import-the-key-file
 RUN set -ex; \
 	export GNUPGHOME="$(mktemp -d)"; \
